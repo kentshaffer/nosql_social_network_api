@@ -30,7 +30,7 @@ module.exports = {
       .catch(err => res.json({ message: 'thought query failed' }))
   },
 
-  // Get an individual thought
+  // Update a thought
   // creates new thought without user rather than updating existing thought based on id 
   updateThought(req, res) {
     Thought.findOneAndUpdate(
@@ -54,6 +54,42 @@ module.exports = {
         console.log(err);
         res.status(500).json(err);
       });
+  },
+
+  // Add a reaction
+  addReaction(req, res) {
+    console.log('You are adding a reaction');
+    console.log(req.body);
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { new: true }
+    )
+      .then((thoughtData) =>
+        !thoughtData
+          ? res
+            .status(404)
+            .json({ message: 'No thought found with this id!' })
+          : res.json(thoughtData)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+
+  // Delete a reaction
+  deleteReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { new: true }
+    )
+      .then((thoughtData) =>
+        !thoughtData
+          ? res
+            .status(404)
+            .json({ message: 'No thought found with this id!' })
+          : res.json(thoughtData)
+      )
+      .catch((err) => res.status(500).json(err));
   },
 
 };
