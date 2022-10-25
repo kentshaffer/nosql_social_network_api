@@ -31,7 +31,6 @@ module.exports = {
   },
 
   // Update a thought
-  // creates new thought without user rather than updating existing thought based on id 
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -79,14 +78,12 @@ module.exports = {
   deleteReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { $pull: { reactions: {reactionId: req.params.reactionId} } },
       { new: true }
     )
       .then((thoughtData) =>
         !thoughtData
-          ? res
-            .status(404)
-            .json({ message: 'No thought found with this id!' })
+          ? res.status(404).json({ message: 'No thought found with this id!' })
           : res.json(thoughtData)
       )
       .catch((err) => res.status(500).json(err));
