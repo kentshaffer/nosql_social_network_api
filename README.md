@@ -43,7 +43,7 @@ If you have any questions or would like to get in contact, I can be reached at k
 
 ## Video of application functionality: 
 
-(https://watch.screencastify.com/v/Q7s7704JF2KXaKCuMijH›)
+(https://watch.screencastify.com/v/Q7s7704JF2KXaKCuMijH)
 
 ---
 ## Screenshots and Gifs of app:
